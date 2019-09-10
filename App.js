@@ -7,6 +7,13 @@ app.use(
   bodyParser.urlencoded({ extended: false })
 );
 
+const mysql = require("mysql");
+const connection = mysql.createConnection({
+  user: "root",
+  password: "12345678",
+  database: "audio"
+});
+
 app.use(
   "/getAudio",
   express.static(__dirname + "/audio")
@@ -19,12 +26,7 @@ const upload = multer({
       cb(null, "./audio");
     },
     filename: function(req, file, cb) {
-      cb(
-        null,
-        new Date().valueOf() +
-          "-" +
-          file.originalname
-      );
+      cb(null, file.originalname);
     }
   }),
   limits: { fileSize: 50 * 1024 * 1024 }
@@ -34,12 +36,40 @@ app.post(
   "/save",
   upload.single("audio"),
   function(req, res) {
-    console.log(req.body);
+    const { fileName, fileTime } = req.body;
 
-    res.send("hello");
+    connection.query(
+      "INSERT INTO files (fileName, fileTime) VALUES (?, ?)",
+      [fileName, fileTime],
+      err => {
+        if (err) {
+          console.log(err);
+          res.send({ result: "Error" });
+        } else {
+          res.send({ result: "OK" });
+        }
+      }
+    );
   }
 );
 
+app.post("/get", function(req, res) {
+  connection.query(
+    "SELECT * FROM files",
+    function(err, files) {
+      if (err) {
+        res.send({ result: "Error" });
+      } else {
+        res.send({
+          files,
+          result: "OK"
+        });
+      }
+    }
+  );
+});
+
 app.listen(3000, function() {
+  connection.connect();
   console.log("server start");
 });
