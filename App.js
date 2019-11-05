@@ -18,6 +18,10 @@ app.use(
   "/getAudio",
   express.static(__dirname + "/audio")
 );
+app.use(
+  "/gifs",
+  express.static(__dirname + "/gifs")
+);
 
 const multer = require("multer");
 const upload = multer({
@@ -53,23 +57,15 @@ app.post(
   }
 );
 
-app.post("/get", function(req, res) {
-  connection.query(
-    "SELECT * FROM files",
-    function(err, files) {
-      if (err) {
-        res.send({ result: "Error" });
-      } else {
-        res.send({
-          files,
-          result: "OK"
-        });
-      }
-    }
-  );
-});
+const scriptRouter = require("./routes/script/script.js");
+app.use("/script", scriptRouter);
+
+const readScript = require("./readScript");
 
 app.listen(3000, function() {
   connection.connect();
   console.log("server start");
+
+  readScript.read("openings", "day0");
+  readScript.read("flows", "N_대인관계_0");
 });
