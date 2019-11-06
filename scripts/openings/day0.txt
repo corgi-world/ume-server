@@ -15,17 +15,39 @@
 		"messages": ["어", "떤", "기분?"],
 		"delays": [100, 100, 100],
 		"inputType": "button",
-		"buttonTexts": ["1", "2", "3", "4"],
-		"changeScript": {
-			mark: "##",
-			newTexts: ["우울한", "화난", "힘든"]
+		"buttonTexts": ["1", "2", "3", "4", "5"],
+		"changeMessages": {
+			"mark": "##",
+			"newTexts": ["우울한", "화난", "힘든", "짜증난", "미친"]
+		},
+		"changeButtonTexts": {
+			"$$0": "",
+			"$$1": "",
+			"$$2": "",
+			"$$3": "",
+			"$$4": ""
+		},
+		"branch": {
+			"0": "P",
+			"1": "N",
+			"2": "N",
+			"3": "P",
+			"4": "N"
 		}
 	},
 	"2": {
 		"messages": ["##", "##", "##"],
 		"delays": [100, 100, 100],
 		"inputType": "button",
-		"buttonTexts": ["1", "2", "3", "4"]
-	}
-	"endLevel": 1
+		"buttonTexts": ["1", "2", "3", "4", "5"],
+		"branch": {
+			"0": "대인관계",
+			"1": "취업",
+			"2": "학업",
+			"3": "직장",
+			"4": "모름"
+
+		}
+	},
+	"endLevel": 2
 }
