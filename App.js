@@ -62,10 +62,26 @@ app.use("/script", scriptRouter);
 
 const readScript = require("./readScript");
 
+var fs = require("fs");
 app.listen(3000, function() {
   connection.connect();
-  console.log("server start");
 
-  readScript.read("openings", "day0");
-  readScript.read("flows", "N_대인관계_0");
+  const openings = "./scripts/openings/";
+  fs.readdirSync(openings).forEach(file => {
+    readScript.read("openings", file);
+  });
+  const contents = "./scripts/contents/";
+  fs.readdirSync(contents).forEach(file => {
+    readScript.read("contents", file);
+  });
+  const closings = "./scripts/closings/";
+  fs.readdirSync(closings).forEach(file => {
+    readScript.read("closings", file);
+  });
+  const flows = "./scripts/flows/";
+  fs.readdirSync(flows).forEach(file => {
+    readScript.read("flows", file);
+  });
+
+  console.log("server start");
 });

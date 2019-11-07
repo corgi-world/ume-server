@@ -15,16 +15,26 @@ router.post("/get", function(req, res) {
     const day = req.body.day;
     s = scriptObjects.openings["day" + day];
   } else if (scriptType === contents) {
-    const isPositivie = req.body.isPositivie
-      ? "P"
-      : "N";
+    const sentiment = req.body.sentiment;
     const event = req.body.event;
     const day = req.body.day;
     const contentCount = req.body.contentCount;
 
     const flow =
-      isPositivie + "_" + event + "_" + day;
-    console.log(flow);
+      sentiment + "_" + event + "_" + day;
+    const contentKey =
+      scriptObjects.flows[flow][contentCount];
+
+    console.log(sentiment);
+    console.log(event);
+    console.log(contentKey);
+    console.log(contentCount);
+
+    if (contentKey == undefined) {
+      // closing
+    } else {
+      s = scriptObjects.contents[contentKey];
+    }
   }
 
   res.send(s);
