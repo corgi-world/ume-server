@@ -1,7 +1,7 @@
 {
 	"0": {
-		"messages": ["@@ 안녕", "gif", "바보야~"],
-		"delays": [100, 100, 100],
+		"messages": ["@@ 안녕", "gif", "나는 문성운이다!!"],
+		"delays": [1000, 1000, 1000],
 		"inputType": "button",
 		"buttonTexts": ["싫어!", "응!"],
 		"gif": {
@@ -18,7 +18,7 @@
 		"buttonTexts": ["1", "2", "3", "4", "5"],
 		"changeMessages": {
 			"mark": "##",
-			"newTexts": ["우울한", "화난", "힘든", "짜증난", "미친"]
+			"newTexts": ["우울한", "화난", "힘든", "짜증난", "답답한"]
 		},
 		"changeButtonTexts": {
 			"targetLevel": 2,

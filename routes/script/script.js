@@ -31,7 +31,7 @@ router.post("/get", function(req, res) {
     console.log(contentCount);
 
     if (contentKey == undefined) {
-      // closing
+      s = scriptObjects.closings["day" + day];
     } else {
       s = scriptObjects.contents[contentKey];
     }

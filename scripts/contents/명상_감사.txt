@@ -15,7 +15,7 @@
 		"delays": [100, 100, 100],
 		"inputType": "button",
 		"buttonTexts": ["응!"],
-		"recordingText": "녹음 가즈아~"
+		"recordingText": "명상 감사~"
 	},
 	"2": {
 		"messages": ["##", "##", "##"],
