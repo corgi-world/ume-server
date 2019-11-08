@@ -1,5 +1,33 @@
 {
-	"0": "",
-	"1": "",
-	"2": ""
+	"0": {
+		"messages": ["@@ 안녕", "gif", "호흡해봐~"],
+		"delays": [100, 100, 100],
+		"inputType": "text",
+		"gif": {
+			"index": 1,
+			"file": "gifs/corgi.gif",
+			"width": 480,
+			"height": 240
+		},
+		"changeSentimentText": {
+			"mark": "$$"
+		},
+		"changeEventText": {
+			"mark": "%%"
+		}
+	},
+	"1": {
+		"messages": ["%% 때문에", "$$ 감정이군!", "마이크를 눌러!"],
+		"delays": [100, 100, 100],
+		"inputType": "button",
+		"buttonTexts": ["응!"],
+		"recordingText": "녹음 가즈아~"
+	},
+	"2": {
+		"messages": ["##", "##", "##"],
+		"delays": [100, 100, 100],
+		"inputType": "button",
+		"buttonTexts": ["1", "2", "3", "4", "5"]
+	},
+	"endLevel": 2
 }
