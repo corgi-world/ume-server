@@ -4,7 +4,7 @@
 		"delays": [100, 100, 100, 0, 100, 100, 100],
 		"inputType": "text",
 		"gif": {
-			"index": 3,
+			"index": 2,
 			"file": "gifs/corgi.gif",
 			"width": 480,
 			"height": 240
