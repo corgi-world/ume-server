@@ -73,7 +73,13 @@
 			"3": "P",
 			"4": "P"
 		},
-		"saveSentimentText": "true",
+		"saveSentimentText": {
+			"우울해": "우울한",
+			"불안해": "불안한",
+			"힘들어": "힘든",
+			"행복해": "행복한",
+			"기뻐": "기쁜"
+		},
 		"changeSentimentText": {
 			"mark": "##"
 		}
