@@ -11,7 +11,7 @@ const mysql = require("mysql");
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
-  database: "audio"
+  database: "ume_test"
 });
 
 app.use(
@@ -42,6 +42,7 @@ app.post(
   function(req, res) {
     const { fileName, fileTime } = req.body;
 
+    /*
     connection.query(
       "INSERT INTO files (fileName, fileTime) VALUES (?, ?)",
       [fileName, fileTime],
@@ -53,7 +54,9 @@ app.post(
           res.send({ result: "OK" });
         }
       }
-    );
+    );*/
+
+    res.send({ result: "OK" });
   }
 );
 
@@ -84,4 +87,72 @@ app.listen(3000, function() {
   });
 
   console.log("server start");
+});
+
+/*
+  datebase
+*/
+
+app.post("/login", function(req, res) {
+  const info = req.body;
+  const id = info.id;
+  const name = info.name;
+  const recentDate = "0";
+
+  console.log(info);
+
+  connection.query(
+    "SELECT COUNT(*) FROM user WHERE id = ?",
+    [id],
+    function(err, count) {
+      if (err) {
+        console.log(err);
+        res.send({ result: "Error" });
+      } else {
+        const c = count[0]["COUNT(*)"];
+        const isIdDuplicated = c > 0;
+        console.log(isIdDuplicated);
+        if (isIdDuplicated) {
+          res.send({
+            result: "OK",
+            isIdDuplicated
+          });
+        } else {
+          connection.query(
+            "INSERT INTO user (id, name, recentDate) VALUES (?, ?, ?)",
+            [id, name, recentDate],
+            err => {
+              if (err) {
+                console.log(err);
+                res.send({ result: "Error" });
+              } else {
+                res.send({ result: "OK" });
+              }
+            }
+          );
+        }
+      }
+    }
+  );
+});
+
+app.post("/getDate", function(req, res) {
+  const info = req.body;
+  const id = info.id;
+
+  console.log(info);
+
+  connection.query(
+    "SELECT recentDate FROM user WHERE id = ?",
+    [id],
+    function(err, d) {
+      if (err) {
+        console.log(err);
+        res.send({ result: "Error" });
+      } else {
+        const recentDate = d[0].recentDate;
+        res.send({ result: "OK", recentDate });
+      }
+    }
+  );
 });
