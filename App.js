@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const emojiStrip = require("emoji-strip");
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(
@@ -40,12 +42,34 @@ app.post(
   "/save",
   upload.single("audio"),
   function(req, res) {
-    const { fileName, fileTime } = req.body;
+    const {
+      id,
+      name,
+      day,
+      sentimentText,
+      eventText,
+      recordingText,
+      fileName,
+      fileTime
+    } = req.body;
+    const date = new Date().toString();
 
-    /*
+    var r = emojiStrip(recordingText);
+    var f = id + "-" + "day-" + fileName;
+
     connection.query(
-      "INSERT INTO files (fileName, fileTime) VALUES (?, ?)",
-      [fileName, fileTime],
+      "INSERT INTO recording (id, name, day, sentimentText, eventText, recordingText, fileName, fileTime, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        id,
+        name,
+        day,
+        sentimentText,
+        eventText,
+        r,
+        f,
+        fileTime,
+        date
+      ],
       err => {
         if (err) {
           console.log(err);
@@ -54,9 +78,7 @@ app.post(
           res.send({ result: "OK" });
         }
       }
-    );*/
-
-    res.send({ result: "OK" });
+    );
   }
 );
 
@@ -73,6 +95,7 @@ app.listen(3000, function() {
   fs.readdirSync(openings).forEach(file => {
     readScript.read("openings", file);
   });
+
   const contents = "./scripts/contents/";
   fs.readdirSync(contents).forEach(file => {
     readScript.read("contents", file);
@@ -97,7 +120,7 @@ app.post("/login", function(req, res) {
   const info = req.body;
   const id = info.id;
   const name = info.name;
-  const recentDate = "0";
+  const loginDate = new Date().toString();
 
   console.log(info);
 
@@ -111,7 +134,6 @@ app.post("/login", function(req, res) {
       } else {
         const c = count[0]["COUNT(*)"];
         const isIdDuplicated = c > 0;
-        console.log(isIdDuplicated);
         if (isIdDuplicated) {
           res.send({
             result: "OK",
@@ -119,8 +141,8 @@ app.post("/login", function(req, res) {
           });
         } else {
           connection.query(
-            "INSERT INTO user (id, name, recentDate) VALUES (?, ?, ?)",
-            [id, name, recentDate],
+            "INSERT INTO user (id, name, loginDate) VALUES (?, ?, ?)",
+            [id, name, loginDate],
             err => {
               if (err) {
                 console.log(err);
@@ -140,18 +162,56 @@ app.post("/getDate", function(req, res) {
   const info = req.body;
   const id = info.id;
 
+  console.log("getDate");
   console.log(info);
 
   connection.query(
-    "SELECT recentDate FROM user WHERE id = ?",
+    "SELECT loginDate FROM user WHERE id = ?",
     [id],
     function(err, d) {
       if (err) {
         console.log(err);
         res.send({ result: "Error" });
       } else {
-        const recentDate = d[0].recentDate;
-        res.send({ result: "OK", recentDate });
+        const loginDate = d[0].loginDate;
+        res.send({ result: "OK", loginDate });
+      }
+    }
+  );
+});
+
+app.post("/saveInput", function(req, res) {
+  const {
+    id,
+    name,
+    day,
+    sentimentText,
+    eventText,
+    type,
+    text
+  } = req.body;
+  const date = new Date().toString();
+
+  var t = emojiStrip(text);
+
+  connection.query(
+    "INSERT INTO input (id, name, day, sentimentText, eventText, type, text, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      id,
+      name,
+      day,
+      sentimentText,
+      eventText,
+      type,
+      t,
+      date
+    ],
+    err => {
+      if (err) {
+        console.log(err);
+        res.send({ result: "Error" });
+      } else {
+        res.send({ result: "OK" });
       }
     }
   );
