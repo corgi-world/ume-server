@@ -10,9 +10,18 @@ app.use(
 );
 
 const mysql = require("mysql");
+
+/*
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
+  database: "ume_test"
+});
+*/
+
+const connection = mysql.createConnection({
+  user: "msw",
+  password: "msw1234",
   database: "ume_test"
 });
 
@@ -55,7 +64,8 @@ app.post(
     const date = new Date().toString();
 
     var r = emojiStrip(recordingText);
-    var f = id + "-" + "day-" + fileName;
+    var f =
+      id + "-" + "day" + day + "-" + fileName;
 
     connection.query(
       "INSERT INTO recording (id, name, day, sentimentText, eventText, recordingText, fileName, fileTime, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -86,6 +96,11 @@ const scriptRouter = require("./routes/script/script.js");
 app.use("/script", scriptRouter);
 
 const readScript = require("./readScript");
+
+app.get("/test", function(req, res) {
+  const now = new Date();
+  res.send(now.toString());
+});
 
 var fs = require("fs");
 app.listen(3000, function() {
@@ -120,7 +135,11 @@ app.post("/login", function(req, res) {
   const info = req.body;
   const id = info.id;
   const name = info.name;
-  const loginDate = new Date().toString();
+  const now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  const loginDate = Math.floor(diff / oneDay);
 
   console.log(info);
 
