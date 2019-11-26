@@ -31,3 +31,21 @@ const obj = {
 };
 
 module.exports = obj;
+
+/*
+    if (folderName == "contents") {
+      const s = data
+        .split("10000")
+        .join("1000");
+      console.log(s);
+
+      fs.writeFileSync(
+        "./scripts/" +
+          folderName +
+          "/" +
+          fileName,
+        s,
+        "utf8"
+      );
+    }
+*/

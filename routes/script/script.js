@@ -8,18 +8,19 @@ const contents = "contents";
 const closings = "closings";
 
 const mysql = require("mysql");
+/*
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
   database: "ume_test"
 });
-/*
+*/
+
 const connection = mysql.createConnection({
   user: "msw",
   password: "msw1234",
   database: "ume_test"
 });
-*/
 
 router.post("/get", function(req, res) {
   let s = {};
@@ -50,6 +51,8 @@ router.post("/get", function(req, res) {
       e = "C";
     } else if (event == "취업") {
       e = "D";
+    } else if (event == "잘모르겠어") {
+      e = "E";
     }
 
     console.log(sentiment);
