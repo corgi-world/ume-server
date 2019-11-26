@@ -10,20 +10,18 @@ app.use(
 );
 
 const mysql = require("mysql");
-
-/*
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
   database: "ume_test"
 });
-*/
-
+/*
 const connection = mysql.createConnection({
   user: "msw",
   password: "msw1234",
   database: "ume_test"
 });
+*/
 
 app.use(
   "/getAudio",
@@ -64,8 +62,6 @@ app.post(
     const date = new Date().toString();
 
     var r = emojiStrip(recordingText);
-    var f =
-      id + "-" + "day" + day + "-" + fileName;
 
     connection.query(
       "INSERT INTO recording (id, name, day, sentimentText, eventText, recordingText, fileName, fileTime, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -76,7 +72,7 @@ app.post(
         sentimentText,
         eventText,
         r,
-        f,
+        fileName,
         fileTime,
         date
       ],

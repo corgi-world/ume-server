@@ -8,19 +8,18 @@ const contents = "contents";
 const closings = "closings";
 
 const mysql = require("mysql");
-/*
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
   database: "ume_test"
 });
-*/
-
+/*
 const connection = mysql.createConnection({
   user: "msw",
   password: "msw1234",
   database: "ume_test"
 });
+*/
 
 router.post("/get", function(req, res) {
   let s = {};
@@ -53,14 +52,16 @@ router.post("/get", function(req, res) {
       e = "D";
     }
 
+    console.log(sentiment);
+    console.log(event);
+    console.log(contentCount);
+
     const flow = sentiment + "_" + e + "_" + day;
+    console.log(flow);
     const contentKey =
       scriptObjects.flows[flow][contentCount];
 
-    console.log(sentiment);
-    console.log(event);
     console.log(contentKey);
-    console.log(contentCount);
 
     if (contentKey == undefined) {
       s = scriptObjects.closings["day" + day];
