@@ -11,19 +11,19 @@ app.use(
 
 const mysql = require("mysql");
 
-/*
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
   database: "ume_test"
 });
-*/
 
+/*
 const connection = mysql.createConnection({
   user: "msw",
   password: "msw1234",
   database: "ume_test"
 });
+*/
 
 app.use(
   "/getAudio",
@@ -62,6 +62,8 @@ app.post(
       fileTime
     } = req.body;
     const date = new Date().toString();
+
+    console.log(req.body);
 
     var r = emojiStrip(recordingText);
 

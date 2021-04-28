@@ -8,19 +8,20 @@ const contents = "contents";
 const closings = "closings";
 
 const mysql = require("mysql");
-/*
+
 const connection = mysql.createConnection({
   user: "root",
   password: "12345678",
   database: "ume_test"
 });
-*/
 
+/*
 const connection = mysql.createConnection({
   user: "msw",
   password: "msw1234",
   database: "ume_test"
 });
+*/
 
 router.post("/get", function(req, res) {
   let s = {};
